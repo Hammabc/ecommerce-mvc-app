@@ -1,28 +1,25 @@
-package com.jtspringproject.JtSpringProject.controller;
+package main.java.com.jtspringproject.JtSpringProject.controller;
 
-import java.sql.*;
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.jtspringproject.JtSpringProject.models.Category;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
 import com.jtspringproject.JtSpringProject.services.categoryService;
 import com.jtspringproject.JtSpringProject.services.productService;
 import com.jtspringproject.JtSpringProject.services.userService;
-import com.mysql.cj.protocol.Resultset;
 
-import net.bytebuddy.asm.Advice.This;
-import net.bytebuddy.asm.Advice.OffsetMapping.ForOrigin.Renderer.ForReturnTypeName;
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -234,8 +231,8 @@ public class AdminController {
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
-			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","Admin@11");
+			PreparedStatement stmt = con.prepareStatement("select * from customer where username = ?"+";");
 			stmt.setString(1, usernameforclass);
 			ResultSet rst = stmt.executeQuery();
 			
@@ -268,9 +265,9 @@ public class AdminController {
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","Admin@11");
 			
-			PreparedStatement pst = con.prepareStatement("update users set username= ?,email = ?,password= ?, address= ? where uid = ?;");
+			PreparedStatement pst = con.prepareStatement("update customer set username= ?,email = ?,password= ?, address= ? where uid = ?;");
 			pst.setString(1, username);
 			pst.setString(2, email);
 			pst.setString(3, password);
