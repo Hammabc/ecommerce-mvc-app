@@ -1,8 +1,8 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
-<%@page import ="java.io.FileOutputStream" %>    
-<%@page import=" java.io.ObjectOutputStream" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -46,70 +46,38 @@
 	</nav><br>
 	<div class="container-fluid">
 
-		<a style="margin: 20px 0" class="btn btn-primary"
-			href="/user/products">Add Product</a><br>
+		
 		<table class="table">
 
 			<tr>
-				<th scope="col">id</th>
-				<th scope="col">Product Name</th>
-				<th scope="col">Price</th>
-				<th scope="col">Description</th>
-				<th scope="col">Delete</th>
 				
+				<th scope="col">Customer Name</th>
+				<th scope="col">Email</th>
+				<th scope="col">Address</th>
+				<th scope="col">Delete</th>
 			</tr>
 			<tbody>
+				<c:forEach var="customer" items="${customers }">
 				<tr>
-
-					<%
-					try {
-						String url = "jdbc:mysql://34.139.89.0:3306/ecommjava";
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con = DriverManager.getConnection(url, "root", "Admin@11");
-						Statement stmt = con.createStatement();
-						Statement stmt2 = con.createStatement();
-						ResultSet rs = stmt.executeQuery("select * from cart");
-					%>
-					<%
-					while (rs.next()) {
-					%>
 					<td>
-						<%= rs.getInt(1) %>
+						${customer.username}
 					</td>
 					<td>
-						<%= rs.getString(2) %>
-					</td>
-					<td>
-						<%= rs.getString(3) %>
+					    ${customer.email}
 						
 					</td>
 					<td>
-						<%= rs.getString(4) %>
+					    ${customer.address}
 						
-					</td>
-					
-					
+				    </td>
+					</tr>
+                </c:forEach>
 
-					<td>
-					<form action="cart/delete" method="get">
-							<input type="hidden" name="id" value="<%=rs.getInt(1)%>">
-							<input type="submit" value="Delete" class="btn btn-danger">
-					</form>
-					</td>
-					
 
-				</tr>
-				<%
-				}
-				%>
-
+				
 			</tbody>
 		</table>
-		<%
-		} catch (Exception ex) {
-		out.println("Exception Occurred:: " + ex.getMessage());
-		}
-		%>
+		
 	</div>
 
 
